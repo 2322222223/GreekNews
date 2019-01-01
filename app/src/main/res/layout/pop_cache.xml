@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90eeeeee"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="320dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="#ffffff"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:id="@+id/tv_cache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="normal"/>
+
+                <com.tuyenmonkey.mkloader.MKLoader
+                    android:id="@+id/anim"
+                    android:visibility="invisible"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    app:mk_type="Worm"
+                app:mk_color="#303F9F"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:textStyle="bold"
+                    android:paddingBottom="10dp"
+                    android:textColor="#303F9F"
+                    android:id="@+id/esc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:text="取消"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:paddingBottom="10dp"
+                    android:layout_marginLeft="60dp"
+                    android:textColor="#E54B31"
+                    android:id="@+id/enter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:text="确定清理" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
