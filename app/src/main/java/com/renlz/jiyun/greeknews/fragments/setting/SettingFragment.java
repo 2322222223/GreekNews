@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import com.tuyenmonkey.mkloader.MKLoader;
  */
 
 public class SettingFragment extends SimpleFragment implements View.OnClickListener {
+    private static ThemeNight sThemeNight;
     private View view;
     /**
      * 常规
@@ -76,7 +79,17 @@ public class SettingFragment extends SimpleFragment implements View.OnClickListe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
+                    if (sThemeNight != null) {
+                        sThemeNight.setNight(true);
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.recreate();
+                    }
+                } else {
+                    if (sThemeNight != null) {
+                        sThemeNight.setNight(false);
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.recreate();
+                    }
                 }
             }
         });
@@ -155,13 +168,13 @@ public class SettingFragment extends SimpleFragment implements View.OnClickListe
     }
 
     private void sendEmail() {
-        SendEmail.senEmail(mContext,"2322222223@qq.com","我是###","哈哈哈哈");
+        SendEmail.senEmail(mContext, "2322222223@qq.com", "我是###", "哈哈哈哈");
     }
 
     private void showAlerTwo() {
         View inflate = LayoutInflater.from(mContext).inflate(R.layout.pop_genxin, null);
         TextView tv = inflate.findViewById(R.id.tv_gengxin);
-        LinearLayout laygx=inflate.findViewById(R.id.lay_gx);
+        LinearLayout laygx = inflate.findViewById(R.id.lay_gx);
         if (mWindowTwo == null) {
             mWindowTwo = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         }
@@ -172,7 +185,7 @@ public class SettingFragment extends SimpleFragment implements View.OnClickListe
             public void run() {
                 tv.setText("已经是最新版本了");
             }
-        },2000);
+        }, 2000);
 
         laygx.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,5 +232,15 @@ public class SettingFragment extends SimpleFragment implements View.OnClickListe
         mWindow.showAtLocation(inflate, Gravity.CENTER, 0, 0);
         mWindow.setContentView(inflate);
 
+    }
+
+
+    public interface ThemeNight {
+        void setNight(boolean night);
+    }
+
+    public static void setIsNight(ThemeNight themeNight) {
+
+        sThemeNight = themeNight;
     }
 }

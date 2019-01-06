@@ -40,6 +40,7 @@ import com.renlz.jiyun.greeknews.fragments.weixin.WeiXinFragment;
 import com.renlz.jiyun.greeknews.fragments.xitu.XiTuFragment;
 import com.renlz.jiyun.greeknews.fragments.zhihu.ZhiHuFragment;
 import com.renlz.jiyun.greeknews.fragments.zhihu.fragment.RiBaoFragment;
+import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
 
@@ -197,10 +198,9 @@ public class MainActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHuVi
         mSv = (SearchView) findViewById(R.id.sv);
         mToolbar2 = (Toolbar) findViewById(R.id.toolbar_2);
         mFrLay = (FrameLayout) findViewById(R.id.fr_lay);
-        mSv.setBackground(null);
         mSearchIm = (ImageView) findViewById(R.id.search_im);
         mSearchIm.setOnClickListener(this);
-
+        mSv.setIconified(false);
         mProgressWheel = (ProgressWheel) findViewById(R.id.progress_wheel);
         mLayPro = (LinearLayout) findViewById(R.id.lay_pro);
         mLayAll = (LinearLayout) findViewById(R.id.lay_all);

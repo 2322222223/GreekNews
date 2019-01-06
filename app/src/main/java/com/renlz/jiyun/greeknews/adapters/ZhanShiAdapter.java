@@ -48,7 +48,6 @@ public class ZhanShiAdapter extends RecyclerView.Adapter implements ItemTouch {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         MyHolder holder1 = (MyHolder) holder;
         holder1.mTv.setText(mList.get(position).getTitle());
-        holder1.mSw.setOnCheckedChangeListener(null);
         if (mList.get(position).isIsck()) {
             holder1.mSw.setChecked(true);
         } else {
@@ -59,12 +58,6 @@ public class ZhanShiAdapter extends RecyclerView.Adapter implements ItemTouch {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mList.get(position).setIsck(isChecked);
-            }
-        });
-
-        holder1.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (mOnClickListener != null) {
                     mOnClickListener.OnClick(position, holder1.mSw.isChecked());
                 }

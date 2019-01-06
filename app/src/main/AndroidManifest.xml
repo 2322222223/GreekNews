@@ -4,7 +4,18 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <!-- 必须的权限 -->
+          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+          <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+          <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+          <uses-permission android:name="android.permission.INTERNET" />
 
+          <!-- 推荐的权限 -->
+          <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
+          <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+          <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+          <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+          <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".myapp.MyApp"
         android:allowBackup="true"
@@ -12,7 +23,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme1">
+        android:theme="@style/AppTheme">
         <activity android:name=".activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +31,62 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+         <!--QQ-->
+                            <activity
+                                android:name="com.tencent.tauth.AuthActivity"
+                                android:launchMode="singleTask"
+                                android:noHistory="true">
+                                <intent-filter>
+                                    <action android:name="android.intent.action.VIEW" />
+
+                                    <category android:name="android.intent.category.DEFAULT" />
+                                    <category android:name="android.intent.category.BROWSABLE" />
+
+                                    <data android:scheme="tencent100424468" />
+                                </intent-filter>
+                            </activity>
+                            <activity
+                                android:name="com.tencent.connect.common.AssistActivity"
+                                android:configChanges="orientation|keyboardHidden|screenSize"
+                                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+                            <!--微信-->
+                            <activity
+                                android:name=".wxapi.WXEntryActivity"
+                                android:configChanges="keyboardHidden|orientation|screenSize"
+                                android:exported="true"
+                                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+                            <!--新浪-->
+                            <activity
+                                android:name="com.umeng.socialize.media.WBShareCallBackActivity"
+                                android:configChanges="keyboardHidden|orientation"
+                                android:exported="false"
+                                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+                            <activity
+                                android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+                                android:configChanges="keyboardHidden|orientation"
+                                android:exported="false"
+                                android:windowSoftInputMode="adjustResize"></activity>
+                            <activity
+                                android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
+                                android:launchMode="singleTask"
+                                android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+                                <intent-filter>
+                                    <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                                    <category android:name="android.intent.category.DEFAULT" />
+                                </intent-filter>
+                            </activity>
         <activity android:name=".activitys.CalenderActivity"/>
         <activity android:name=".activitys.InfoActivity"/>
         <activity android:name=".activitys.WxInfoActivity"/>
         <activity android:name=".activitys.ZhanShiActivity"/>
         <activity android:name=".activitys.CommentsActivity"/>
+        <activity android:name=".activitys.JieDianActivity"/>
+        <activity android:name=".activitys.SistersActivity"/>
+        <activity android:name=".activitys.ZlInfoActivity"/>
+        <activity android:name=".activitys.ShuJuZhiHuiNewsInfoActivity"/>
     </application>
 
 </manifest>

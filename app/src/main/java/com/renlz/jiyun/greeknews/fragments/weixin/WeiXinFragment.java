@@ -19,6 +19,7 @@ import com.renlz.jiyun.greeknews.beans.WxNews;
 import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
+import com.renlz.jiyun.greeknews.utils.Constants;
 import com.renlz.jiyun.greeknews.utils.Utils;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -33,7 +34,6 @@ import java.util.Map;
  */
 
 public class WeiXinFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuView>> implements ZhiHuView {
-    private View view;
     private PullLoadMoreRecyclerView mWxrecyclerview;
     private ZhiHuPresenter<ZhiHuView> mPresenter;
     private int mPage = 1;
@@ -63,6 +63,11 @@ public class WeiXinFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHu
                 WxNews wxNews = (WxNews) o;
                 List<WxNews.NewslistBean> newslist = wxNews.getNewslist();
                 mAdapter.addList(newslist);
+                break;
+            case WEIXINSEARCH:
+                WxNews news = (WxNews) o;
+                List<WxNews.NewslistBean> searchlist = news.getNewslist();
+                mAdapter.setList(searchlist);
                 break;
         }
     }
@@ -95,66 +100,38 @@ public class WeiXinFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHu
         touchHelper.attachToRecyclerView(mWxrecyclerview.getRecyclerView());
 
         if (mAdapter != null) {
-            mAdapter.setOnItemClickListener(new WxnewAdapter.onItemClickListener() {
-                @Override
-                public void ItemClick(int position) {
-                    WxNews.NewslistBean bean = mAdapter.mList.get(position);
-                    Intent intent = new Intent(mContext, WxInfoActivity.class);
-                    intent.putExtra("url", bean.getUrl());
-                    intent.putExtra("title", bean.getTitle());
-                    startActivity(intent);
-                }
+            mAdapter.setOnItemClickListener(position -> {
+                WxNews.NewslistBean bean = mAdapter.mList.get(position);
+                Intent intent = new Intent(mContext, WxInfoActivity.class);
+                intent.putExtra("image", bean.getPicUrl());
+                intent.putExtra("url", bean.getUrl());
+                intent.putExtra("title", bean.getTitle());
+                intent.putExtra("type", Constants.TYPE_WEIXIN);
+                startActivity(intent);
             });
+
         }
 
         ((MainActivity) mActivity).mSv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                Map<String, Object> map = new HashMap<>();
+                map.put("key", "52b7ec3471ac3bec6846577e79f20e4c");
+                map.put("num", "10");
+                map.put("page", "1");
+                map.put("word", query);
+                mPresenter.setNewsData("wxnew/?", map, EnumApi.WEIXINSEARCH);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<WxNews.NewslistBean> list = filter(mList, newText);
-                mAdapter.setFilter(list);
-                return true;
-            }
-        });
 
-
-        ((MainActivity) mActivity).mSv.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                ((MainActivity) mActivity).mSv.setQuery("", false);
-                ((MainActivity) mActivity).mSv.clearFocus();
                 return true;
             }
         });
     }
 
-
-    private ArrayList<WxNews.NewslistBean> filter(ArrayList<WxNews.NewslistBean> models, String query) {
-
-        query = query.toLowerCase();
-
-        final ArrayList<WxNews.NewslistBean> filteredModelList = new ArrayList<>();
-
-        for (WxNews.NewslistBean model : models) {
-
-            final String text = model.getTitle();
-
-            if (text.contains(query)) {
-
-                filteredModelList.add(model);
-
-            }
-
-        }
-
-        return filteredModelList;
-
-    }
 
     @Override
     protected void initAdapter() {

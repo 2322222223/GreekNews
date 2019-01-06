@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.activitys.MainActivity;
 import com.renlz.jiyun.greeknews.activitys.ZhanShiActivity;
+import com.renlz.jiyun.greeknews.adapters.Vp2Adapter;
 import com.renlz.jiyun.greeknews.adapters.VpAdapter;
 import com.renlz.jiyun.greeknews.base.fragment.BaseFragment;
 import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiType;
+import com.renlz.jiyun.greeknews.beans.TabBean;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
 import com.renlz.jiyun.greeknews.utils.C;
@@ -25,7 +27,9 @@ import com.renlz.jiyun.greeknews.utils.Event;
 import com.renlz.jiyun.greeknews.utils.EventBusUtil;
 import com.renlz.jiyun.greeknews.utils.Utils;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
+import com.umeng.commonsdk.statistics.common.MLog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +39,7 @@ import java.util.Map;
  * Created by Administrator on 2018/12/27.
  */
 
-public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuView>> implements ZhiHuView, View.OnClickListener {
+public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuView>> implements ZhiHuView, View.OnClickListener, ZhanShiActivity.getListString {
 
     private ZhiHuPresenter<ZhiHuView> mPresenter;
     private View view;
@@ -45,8 +49,8 @@ public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuVi
     private ViewPager mVpXitu;
     private ShuJuZhiHuiType mType;
     private List<String> mResult;
-    private VpAdapter mVpAdapter;
-    private ArrayList<String> mList1;
+    private Vp2Adapter mVpAdapter;
+    private ArrayList<String> mList2;
 
     @Override
     public void showProgressBar() {
@@ -76,18 +80,19 @@ public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuVi
     }
 
     private void setData() {
+        mList2 = new ArrayList<>();
+        for (int i = 0; i < mResult.size(); i++) {
+            mList2.add(mResult.get(i));
+        }
+
         mList = new ArrayList<>();
         for (int i = 0; i < mResult.size(); i++) {
             XiTuFragments fragments = XiTuFragments.newInstance(mResult.get(i));
             mList.add(fragments);
         }
-        mVpAdapter = new VpAdapter(getChildFragmentManager(), mList);
+        mVpAdapter = new Vp2Adapter(getChildFragmentManager(), mList, mList2);
         mVpXitu.setAdapter(mVpAdapter);
         mTabXitu.setupWithViewPager(mVpXitu);
-        for (int i = 0; i <mResult.size(); i++) {
-            mTabXitu.getTabAt(i).setText(mResult.get(i));
-        }
-        mList1 = new ArrayList<>();
     }
 
     @Override
@@ -122,6 +127,7 @@ public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuVi
         mMenuXitu = (ImageView) view.findViewById(R.id.menu_xitu);
         mMenuXitu.setOnClickListener(this);
         mVpXitu = (ViewPager) view.findViewById(R.id.vp_xitu);
+        ZhanShiActivity.getlist(this);
     }
 
     @Override
@@ -135,11 +141,30 @@ public class XiTuFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuVi
             default:
                 break;
             case R.id.menu_xitu:
-                EventBusUtil.sendStickyEvent(new Event(C.EventCode.B,mResult));
-                EventBusUtil.sendStickyEvent(new Event(C.EventCode.C,mList1));
                 Intent in = new Intent(mContext, ZhanShiActivity.class);
+                in.putExtra("list", (Serializable) mResult);
+                in.putExtra("list1", mVpAdapter.mList2);
                 startActivity(in);
                 break;
         }
+    }
+
+
+    @Override
+    public void getlist(ArrayList<TabBean> list) {
+        ArrayList<String> list1 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).isIsck()) {
+                list1.add(list.get(i).getTitle());
+            }
+        }
+        mList = new ArrayList<>();
+        for (int i = 0; i < list1.size(); i++) {
+            XiTuFragments fragments = XiTuFragments.newInstance(list1.get(i));
+            mList.add(fragments);
+        }
+        mVpAdapter = new Vp2Adapter(getChildFragmentManager(), mList, list1);
+        mVpXitu.setAdapter(mVpAdapter);
+        mTabXitu.setupWithViewPager(mVpXitu);
     }
 }

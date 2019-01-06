@@ -1,5 +1,6 @@
 package com.renlz.jiyun.greeknews.adapters;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,4 +29,5 @@ public class VpAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mList.size();
     }
+
 }

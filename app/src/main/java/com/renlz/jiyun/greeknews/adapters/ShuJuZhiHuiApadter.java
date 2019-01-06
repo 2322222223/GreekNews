@@ -12,17 +12,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.itemtouchhelper.ItemTouch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/12/31.
  */
 
-public class ShuJuZhiHuiApadter extends RecyclerView.Adapter {
+public class ShuJuZhiHuiApadter extends RecyclerView.Adapter implements ItemTouch {
     private Context mContext;
-    private ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean> mList;
+    public ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean> mList;
+    private OnItemClickListener mOnItemClickListener;
 
     public ShuJuZhiHuiApadter(Context context, ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean> list) {
 
@@ -42,6 +45,14 @@ public class ShuJuZhiHuiApadter extends RecyclerView.Adapter {
         MyHolder holder1 = (MyHolder) holder;
         Glide.with(mContext).load(mList.get(position).getNewsImg()).into(holder1.mIm);
         holder1.mTv.setText(mList.get(position).getTitle());
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.OnItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,6 +65,18 @@ public class ShuJuZhiHuiApadter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    @Override
+    public void ItemMove(int fromposition, int toposition) {
+        Collections.swap(mList, fromposition, toposition);
+        notifyItemMoved(fromposition, toposition);
+    }
+
+    @Override
+    public void ItemDelete(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class MyHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mIm;
@@ -64,5 +87,14 @@ public class ShuJuZhiHuiApadter extends RecyclerView.Adapter {
             mIm = itemView.findViewById(R.id.im_ribao);
             mTv = itemView.findViewById(R.id.tv_ribao);
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+
+        mOnItemClickListener = onItemClickListener;
     }
 }

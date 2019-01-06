@@ -7,7 +7,7 @@
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:src="@drawable/bg_drawer" />
+        android:src="@drawable/header6" />
 
     <TextView
         android:layout_marginRight="20dp"
@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:textSize="28sp"
         android:textColor="#000000"
-        android:text="Ren  LinZhou"
+        android:text="Frist Magic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"/>

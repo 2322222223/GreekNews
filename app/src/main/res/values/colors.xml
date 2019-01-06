@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="windowBackground">#ff1A87C5</color>
-
-    <color name="dialog_content_text">#ff767676</color>
-    <color name="dialog_background">#ffFFFFFF</color>
-
-
-    <color name="nightColorPrimary">#3b3b3b</color>
-    <color name="nightColorPrimaryDark">#383838</color>
-    <color name="nightColorAccent">#a72b55</color>
-
+        <color name="colorPrimary">#3F51B5</color>
+        <color name="colorPrimaryDark">#303F9F</color>
+        <color name="colorAccent">#FF4081</color>
+        <color name="textColorPrimary">#616161</color>
+        <color name="viewBackground">@android:color/white</color>
+        <color name="colorDayNightChange">#A1A1A1</color>
+        <color name="colorlayout">#eeeeee</color>
 </resources>

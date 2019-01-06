@@ -15,6 +15,7 @@ import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.adapters.ZhanShiAdapter;
 import com.renlz.jiyun.greeknews.base.activity.SimpleActivity;
 import com.renlz.jiyun.greeknews.beans.TabBean;
+import com.renlz.jiyun.greeknews.fragments.xitu.XiTuFragment;
 import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
 import com.renlz.jiyun.greeknews.utils.C;
 import com.renlz.jiyun.greeknews.utils.Event;
@@ -44,6 +45,8 @@ public class ZhanShiActivity extends SimpleActivity {
     private SharedPreferences mSp;
     private ArrayList<String> mList1;
     private boolean isCb;
+    private ArrayList<TabBean> mbeanlist;
+    public static getListString mGetListString;
 
 
     @Override
@@ -51,11 +54,21 @@ public class ZhanShiActivity extends SimpleActivity {
         mToolbarZhanshi.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mGetListString!=null){
+                    mGetListString.getlist(mbeanlist);
+                }
                 finish();
             }
         });
     }
 
+
+     public interface getListString{
+        void getlist(ArrayList<TabBean> list);
+    }
+    public static void getlist(getListString getListString){
+        mGetListString = getListString;
+    }
 
     @Override
     protected void initAdapter() {
@@ -64,7 +77,6 @@ public class ZhanShiActivity extends SimpleActivity {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(mZsRecyclerview.getRecyclerView());
     }
-
 
 
     @Override
@@ -76,23 +88,23 @@ public class ZhanShiActivity extends SimpleActivity {
         mList = (ArrayList<String>) intent.getSerializableExtra("list");
         mList1 = (ArrayList<String>) intent.getSerializableExtra("list1");
 
-        ArrayList<TabBean> list = new ArrayList<>();
+        mbeanlist = new ArrayList<>();
 
         for (int i = 0; i < mList.size(); i++) {
             isCb = false;
             for (int j = 0; j < mList1.size(); j++) {
-                if (mList.get(j).equals(mList1.get(j))) {
+                if (mList.get(i).equalsIgnoreCase(mList1.get(j))) {
                     isCb = true;
-                    list.add(new TabBean(mList.get(j), isCb));
                 }
             }
+            mbeanlist.add(new TabBean(mList.get(i), isCb));
         }
-        mZhanShiAdapter = new ZhanShiAdapter(this, list);
+        mZhanShiAdapter = new ZhanShiAdapter(this, mbeanlist);
         mZsRecyclerview.setAdapter(mZhanShiAdapter);
         mZhanShiAdapter.setOnClickListener(new ZhanShiAdapter.OnClickListener() {
             @Override
             public void OnClick(int position, boolean isck) {
-                list.get(position).setIsck(isck);
+                mbeanlist.get(position).setIsck(isck);
             }
 
         });
@@ -112,8 +124,4 @@ public class ZhanShiActivity extends SimpleActivity {
         return R.layout.activity_zhanshi;
     }
 
-    @Override
-    protected boolean isRegisterEventBus() {
-        return true;
-    }
 }

@@ -28,6 +28,7 @@ import com.renlz.jiyun.greeknews.base.fragment.SimpleFragment;
 import com.renlz.jiyun.greeknews.beans.BeforeNews;
 import com.renlz.jiyun.greeknews.beans.NewestNew;
 import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
+import com.renlz.jiyun.greeknews.myapp.MyApp;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
 import com.renlz.jiyun.greeknews.utils.C;
@@ -51,7 +52,7 @@ import retrofit2.http.HEAD;
  */
 
 
-public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuView>> implements ZhiHuView, View.OnClickListener {
+public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuView>> implements ZhiHuView, View.OnClickListener, XRecyclerView.LoadingListener {
 
     private ZhiHuPresenter<ZhiHuView> mPresenter;
     private View view;
@@ -107,11 +108,14 @@ public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
             list1.add(list.get(i).getImages().get(0));
         }
         mAdapter.addHeader(inflate);
+        mAdapter.notifyDataSetChanged();
 
         banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
+
+                Glide.with(MyApp.sMyApp).load(path).into(imageView);
+
             }
         });
         banner.setImages(list1);
@@ -136,7 +140,7 @@ public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
                 public void OnItemClick(int position) {
                     NewestNew.StoriesBean bean = mAdapter.mList.get(position);
                     Intent in = new Intent(mContext, InfoActivity.class);
-                    in.putExtra("bean", bean);
+                    in.putExtra("bean", bean.getId());
                     startActivity(in);
                 }
 
@@ -146,6 +150,7 @@ public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
                 }
             });
         }
+        mRlvRb.setLoadingListener(this);
     }
 
     @Override
@@ -171,7 +176,7 @@ public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
     public void onEventReceived(Event<String> event) {
         if (event != null && event.getCode() == C.EventCode.A) {
             mDate = event.getData();
-            mPresenter.setNewsData("",mDate,EnumApi.BEFORELIST);
+            mPresenter.setNewsData("", mDate, EnumApi.BEFORELIST);
         }
     }
 
@@ -206,5 +211,15 @@ public class RiBaoFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
     @Override
     protected boolean isRegisterEventBus() {
         return true;
+    }
+
+    @Override
+    public void onRefresh() {
+        mRlvRb.refreshComplete();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mRlvRb.loadMoreComplete();
     }
 }

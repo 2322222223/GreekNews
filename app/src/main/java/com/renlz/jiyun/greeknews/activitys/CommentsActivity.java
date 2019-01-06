@@ -33,6 +33,7 @@ public class CommentsActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<Zhi
     private TabLayout mTabCom;
     private ViewPager mVpCom;
     private CountList mComments;
+    private int mId;
 
     @Override
     public void showProgressBar() {
@@ -83,20 +84,26 @@ public class CommentsActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<Zhi
         mPresenter.attachView(this);
         Intent intent = getIntent();
         mComments = (CountList) intent.getSerializableExtra("comments");
+        mId = intent.getIntExtra("id",0);
         initFragment();
         mTabCom.setupWithViewPager(mVpCom);
-        mTabCom.getTabAt(0).setText("短评论("+mComments.getShort_comments()+")");
-        mTabCom.getTabAt(1).setText("长评论("+mComments.getLong_comments()+")");
-        mComTitle.setText(mComments.getComments()+"条评论");
+        mTabCom.getTabAt(0).setText("短评论(" + mComments.getShort_comments() + ")");
+        mTabCom.getTabAt(1).setText("长评论(" + mComments.getLong_comments() + ")");
+        mComTitle.setText(mComments.getComments() + "条评论");
     }
 
     private void initFragment() {
-        ArrayList<Fragment>list=new ArrayList<>();
-        list.add(new ShortC_Fragment());
-        list.add(new LongC_Fragment());
+        ArrayList<Fragment> list = new ArrayList<>();
+        ShortC_Fragment shortC_fragment = new ShortC_Fragment();
+        LongC_Fragment longC_fragment = new LongC_Fragment();
+        list.add(shortC_fragment);
+        list.add(longC_fragment);
         VpAdapter vpAdapter = new VpAdapter(getSupportFragmentManager(), list);
         mVpCom.setAdapter(vpAdapter);
-
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",mId);
+        shortC_fragment.setArguments(bundle);
+        longC_fragment.setArguments(bundle);
     }
 
     @Override

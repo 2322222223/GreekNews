@@ -26,15 +26,13 @@ import java.util.List;
 
 public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
     private Context mContext;
-    private ArrayList<GanHuoList.ResultsBean> mList;
-    private String mUrl;
+    public ArrayList<GanHuoList.ResultsBean> mList;
     private final int ONE_VIEW_TYPE = 0;
     private final int TWO_VIEW_TYPE = 1;
+    private OnItemClickListener mOnItemClickListener;
 
 
-
-
-    public GanHuoAdapter(Context context, ArrayList<GanHuoList.ResultsBean> list, ArrayList<SisterList.ResultsBean> list1) {
+    public GanHuoAdapter(Context context, ArrayList<GanHuoList.ResultsBean> list) {
 
         mContext = context;
         mList = list;
@@ -44,10 +42,10 @@ public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == ONE_VIEW_TYPE) {
-            View view1 = View.inflate(mContext, R.layout.item_header_image, null);
-            return new Headerview(view1);
+            View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header_image, parent, false);
+            return new Headerview(inflate);
         } else {
-            View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ganhuo, parent, false);
+            View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_ganhuo, null);
             return new MyHolder(inflate);
         }
     }
@@ -55,19 +53,26 @@ public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof Headerview) {
-            Headerview holder1 = (Headerview) holder;
-            Glide.with(mContext).load("http://ww1.sinaimg.cn/large/0065oQSqly1fsfq2pwt72j30qo0yg78u.jpg").into(holder1.mIm);
-        } if(holder instanceof MyHolder){
+
+        } else if (holder instanceof MyHolder) {
             MyHolder holder1 = (MyHolder) holder;
             holder1.mTitle.setText(mList.get(position).getDesc());
             holder1.mNmae.setText(mList.get(position).getWho());
             holder1.mTime.setText(mList.get(position).getPublishedAt());
+            holder1.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.OnItemClick(position);
+                    }
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size()+1;
+        return mList.size();
     }
 
     public void addList(List<GanHuoList.ResultsBean> list) {
@@ -85,12 +90,6 @@ public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
     public void ItemDelete(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
-    }
-
-    public void addString(String url) {
-
-        mUrl = url;
-        notifyDataSetChanged();
     }
 
 
@@ -112,11 +111,9 @@ public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
 
     class Headerview extends XRecyclerView.ViewHolder {
 
-        private final ImageView mIm;
-
         public Headerview(View itemView) {
             super(itemView);
-            mIm = itemView.findViewById(R.id.header_im);
+
         }
     }
 
@@ -129,4 +126,15 @@ public class GanHuoAdapter extends XRecyclerView.Adapter implements ItemTouch {
             return TWO_VIEW_TYPE;
         }
     }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int poisiton);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+
+        mOnItemClickListener = onItemClickListener;
+    }
 }
+
+

@@ -6,13 +6,11 @@ package com.renlz.jiyun.greeknews.myenums;
 
 public enum EnumApi {
     NEWSETNEW,
-    DILYLIST,
     BEFORELIST,
     THEMELIST,
     THEMECHILDLIST,
     SECTIONLIST,
     HOTLIST,
-    DETAILINFO,
     DETAILEXTRAINFO,
     LONGCOMMENTINFO,
     SHORTCONMMENTINFO,
@@ -22,4 +20,14 @@ public enum EnumApi {
     COUNTLIST,
     SJZHNEWSTYPE,
     SJZHNEWS,
+    V2EXTYPE,
+    V2EXTHEME,
+    V2EXTOP,
+    V2RXLIST,
+    WEIXINSEARCH,
+    GANHUOSEARCH,
+    SISTERLIST,
+    ZHUANLANLIST,
+    ZHUANLANINFO,
+    SHUJUZHIHUIINFO,
 }

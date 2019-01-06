@@ -100,7 +100,6 @@ public class RiBaoAdapter extends XRecyclerView.Adapter implements ItemTouch {
 
         mHeader = header;
         notifyItemInserted(0);
-
     }
 
     @Override

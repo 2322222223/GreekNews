@@ -3,7 +3,10 @@ package com.renlz.jiyun.greeknews.http;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -19,4 +22,8 @@ public interface ShuJuZhiHuiNet {
 
     @GET("list")
     Observable<String> getNews1(@QueryMap Map<String, Object> map);
+
+    @POST("detail")
+    @FormUrlEncoded
+    Observable<String> getNewsInfo(@FieldMap Map<String, Object> map);
 }

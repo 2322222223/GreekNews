@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:src="@drawable/bg_about"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:id="@+id/header_im"/>
+        android:id="@+id/im_header_ganhuo"/>
 </LinearLayout>

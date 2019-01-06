@@ -1,5 +1,6 @@
 package com.renlz.jiyun.greeknews.fragments.zhihu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,9 +12,11 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.activitys.MainActivity;
+import com.renlz.jiyun.greeknews.activitys.ZlInfoActivity;
 import com.renlz.jiyun.greeknews.adapters.ZhuanLanAdapter;
 import com.renlz.jiyun.greeknews.base.fragment.BaseFragment;
 import com.renlz.jiyun.greeknews.beans.SectionList;
+import com.renlz.jiyun.greeknews.beans.ZhuanLanList;
 import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
@@ -31,7 +34,6 @@ public class ZhuanLanFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<Zhi
 
     private ZhiHuPresenter<ZhiHuView> mPresenter;
     ArrayList<SectionList.DataBean> mList = new ArrayList<>();
-    private View view;
     private XRecyclerView mRlvZhuanlan;
     private ZhuanLanAdapter mAdapter;
 
@@ -69,6 +71,17 @@ public class ZhuanLanFragment extends BaseFragment<ZhiHuView, ZhiHuPresenter<Zhi
 
     @Override
     protected void initListener() {
+        if(mAdapter!= null){
+            mAdapter.setOnItemClickListener(new ZhuanLanAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent = new Intent(mContext, ZlInfoActivity.class);
+                    intent.putExtra("zltitle",mAdapter.mList.get(position).getName());
+                    intent.putExtra("zlid",mAdapter.mList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
+        }
 
     }
 

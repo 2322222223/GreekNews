@@ -4,10 +4,11 @@
     android:id="@+id/r1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
+    android:background="@color/colorlayout"
     android:orientation="vertical">
 
     <TextView
+        android:textColor="@color/colorDayNightChange"
         android:id="@+id/tv_cg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +22,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/viewBackground"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
 
@@ -47,6 +48,7 @@
                     android:src="@drawable/ic_cache" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -77,6 +79,7 @@
                     android:src="@drawable/ic_image" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -107,6 +110,7 @@
                     android:src="@drawable/ic_night" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -124,6 +128,7 @@
 
 
     <TextView
+        android:textColor="@color/colorDayNightChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -137,7 +142,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/viewBackground"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
 
@@ -164,6 +169,7 @@
                     android:src="@drawable/ic_feedback" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -195,6 +201,7 @@
                     android:src="@drawable/ic_clear" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -227,12 +234,14 @@
                     android:src="@drawable/ic_update" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="检查更新" />
 
                 <TextView
+                    android:textColor="@color/colorDayNightChange"
                     android:id="@+id/jcgx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

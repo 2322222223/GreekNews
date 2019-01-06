@@ -1,22 +1,27 @@
 package com.renlz.jiyun.greeknews.fragments.xitu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.activitys.MainActivity;
+import com.renlz.jiyun.greeknews.activitys.ShuJuZhiHuiNewsInfoActivity;
 import com.renlz.jiyun.greeknews.adapters.ShuJuZhiHuiApadter;
 import com.renlz.jiyun.greeknews.base.fragment.BaseFragment;
 import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
 import com.renlz.jiyun.greeknews.utils.Utils;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +74,36 @@ public class XiTuFragments extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
 
     @Override
     protected void initListener() {
+        MyItemTouchHelperAdapter callback = new MyItemTouchHelperAdapter(mHuiApadter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(mPullrecyclerviewXitu.getRecyclerView());
 
+        mPullrecyclerviewXitu.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPage = 1;
+                loadData();
+                mPullrecyclerviewXitu.loadMore();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPage++;
+                loadData();
+                mPullrecyclerviewXitu.setPullLoadMoreCompleted();
+            }
+        });
+
+        if (mHuiApadter != null) {
+            mHuiApadter.setOnItemClickListener(new ShuJuZhiHuiApadter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent = new Intent(mContext, ShuJuZhiHuiNewsInfoActivity.class);
+                    intent.putExtra("newid",mHuiApadter.mList.get(position));
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
@@ -83,6 +117,10 @@ public class XiTuFragments extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
         mType = mBundle.getString("type");
         mPresenter = createPresenter();
         mPresenter.attachView(this);
+        loadData();
+    }
+
+    private void loadData() {
         Map<String, Object> map = new HashMap<>();
         map.put("appKey", "e2250569c2ca47a283cc00b0df971ad1");
         map.put("category", mType);

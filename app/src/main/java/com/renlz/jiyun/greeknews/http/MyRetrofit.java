@@ -102,4 +102,24 @@ public class MyRetrofit {
         }
     }
 
+
+
+    public static V2EXNet getV2EXNet(boolean isCache, String baseUrl) {
+        if (isCache) {
+            return new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .client(sOkHttpClient)
+                    .build().create(V2EXNet.class);
+        } else {
+            return new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .build().create(V2EXNet.class);
+        }
+    }
+
+
 }

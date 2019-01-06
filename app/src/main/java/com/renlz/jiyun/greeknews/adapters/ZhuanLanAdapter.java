@@ -23,9 +23,10 @@ import java.util.List;
  * Created by Administrator on 2018/12/27.
  */
 
-public class ZhuanLanAdapter extends XRecyclerView.Adapter implements ItemTouch{
+public class ZhuanLanAdapter extends XRecyclerView.Adapter implements ItemTouch {
     private Context mContext;
-    private ArrayList<SectionList.DataBean> mList;
+    public ArrayList<SectionList.DataBean> mList;
+    private OnItemClickListener mOnItemClickListener;
 
     public ZhuanLanAdapter(Context context, ArrayList<SectionList.DataBean> list) {
 
@@ -46,6 +47,14 @@ public class ZhuanLanAdapter extends XRecyclerView.Adapter implements ItemTouch{
         Glide.with(mContext).load(mList.get(position).getThumbnail()).into(holder1.mIm);
         holder1.mTitle.setText(mList.get(position).getDescription());
         holder1.mType.setText(mList.get(position).getName());
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.OnItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -60,8 +69,8 @@ public class ZhuanLanAdapter extends XRecyclerView.Adapter implements ItemTouch{
 
     @Override
     public void ItemMove(int fromposition, int toposition) {
-        Collections.swap(mList,fromposition,toposition);
-        notifyItemMoved(fromposition,toposition);
+        Collections.swap(mList, fromposition, toposition);
+        notifyItemMoved(fromposition, toposition);
     }
 
     @Override
@@ -82,5 +91,14 @@ public class ZhuanLanAdapter extends XRecyclerView.Adapter implements ItemTouch{
             mTitle = itemView.findViewById(R.id.title_zhuanlan);
             mType = itemView.findViewById(R.id.type_zhuanlan);
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+
+        mOnItemClickListener = onItemClickListener;
     }
 }

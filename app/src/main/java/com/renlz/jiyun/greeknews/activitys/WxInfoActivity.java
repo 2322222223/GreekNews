@@ -3,6 +3,7 @@ package com.renlz.jiyun.greeknews.activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +14,19 @@ import android.widget.TextView;
 
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.base.activity.BaseActivity;
+import com.renlz.jiyun.greeknews.beandao.DataBean;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
+import com.renlz.jiyun.greeknews.utils.Constants;
+import com.renlz.jiyun.greeknews.utils.DaoUtil;
 import com.renlz.jiyun.greeknews.utils.Utils;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMWeb;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/12/28.
@@ -32,6 +43,9 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
     private Toolbar mToolbarWx;
     private boolean isLike;
     private String mTitle;
+    private String TAG = "weixin  Activity";
+    private String mImage;
+    private int mType;
 
     @Override
     public void showProgressBar() {
@@ -60,12 +74,7 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
 
     @Override
     protected void initListener() {
-        mToolbarWx.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbarWx.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -79,8 +88,11 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
         setSupportActionBar(mToolbarWx);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent in = getIntent();
+        mImage = in.getStringExtra("image");
         mUrl = in.getStringExtra("url");
         mTitle = in.getStringExtra("title");
+        mType = in.getIntExtra("type", 0);
+
         mTbTitle.setText(mTitle);
         mPresenter = createPresenter();
         mPresenter.attachView(this);
@@ -92,6 +104,29 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
         settings.setJavaScriptEnabled(true);//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         mWebviewWx.loadUrl(mUrl);
+        List<DataBean> beans = DaoUtil.getInstance().dataSelect();
+        boolean lk = false;
+        for (DataBean bean : beans) {
+            Log.d(TAG, "for bean: " + bean.getUrl());
+            if (bean.getUrl().equals(mImage)) {
+                Log.d(TAG, " for  if  " + mImage);
+                lk = true;
+            } else {
+                lk = false;
+            }
+        }
+        setIsLiked(lk);
+    }
+
+
+    public void setIsLiked(boolean lk) {
+        if (lk) {
+            isLike = true;
+            mTbLike.setImageResource(R.drawable.ic_toolbar_like_p);
+        } else {
+            isLike = false;
+            mTbLike.setImageResource(R.drawable.ic_toolbar_like_n);
+        }
     }
 
     @Override
@@ -115,7 +150,28 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
             default:
                 break;
             case R.id.tb_like:
+                setLike();
                 break;
+        }
+    }
+
+    private void setLike() {
+        if (isLike) {
+            mTbLike.setImageResource(R.drawable.ic_toolbar_like_n);
+            List<DataBean> beans = DaoUtil.getInstance().dataSelect();
+            if (beans.size() > 0) {
+                for (DataBean bean : beans) {
+                    if (bean.getUrl().equalsIgnoreCase(mImage)) {
+                        DaoUtil.getInstance().dataDelete(bean);
+                    }
+                }
+            }
+            isLike = false;
+        } else {
+            isLike = true;
+            mTbLike.setImageResource(R.drawable.ic_toolbar_like_p);
+            DataBean dataBean = new DataBean(null, 0, mType, mUrl, mImage, mTitle);
+            DaoUtil.getInstance().DataInsert(dataBean);
         }
     }
 
@@ -134,9 +190,36 @@ public class WxInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHu
                 Utils.getInstance().getToast(2, "已复制到剪贴板");
                 break;
             case 2:
-                Utils.getInstance().getToast(1, "还没做呢");
+                setShare();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setShare() {
+        UMWeb web = new UMWeb(mUrl);
+        web.setTitle(mTitle);
+        ShareAction shareAction = new ShareAction(this);
+        shareAction.withMedia(web).withText(mTitle).setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.ALIPAY, SHARE_MEDIA.SINA, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.EMAIL).setCallback(new UMShareListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onResult(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media) {
+
+            }
+        }).open();
     }
 }

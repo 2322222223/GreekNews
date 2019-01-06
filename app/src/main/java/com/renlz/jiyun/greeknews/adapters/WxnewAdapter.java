@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2018/12/28.
  */
 
-public class WxnewAdapter extends RecyclerView.Adapter implements ItemTouch{
+public class WxnewAdapter extends RecyclerView.Adapter implements ItemTouch {
     private Context mContext;
     public ArrayList<WxNews.NewslistBean> mList;
     private onItemClickListener mClickListener;
@@ -61,13 +61,11 @@ public class WxnewAdapter extends RecyclerView.Adapter implements ItemTouch{
         });
     }
 
-    public void setFilter(ArrayList<WxNews.NewslistBean> locationListModels ) {
-        mList .addAll( locationListModels );
+    public void setFilter(ArrayList<WxNews.NewslistBean> locationListModels) {
+        mList.addAll(locationListModels);
         notifyDataSetChanged();
 
     }
-
-
 
 
     @Override
@@ -90,6 +88,11 @@ public class WxnewAdapter extends RecyclerView.Adapter implements ItemTouch{
     public void ItemDelete(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void setList(List<WxNews.NewslistBean> list) {
+        mList = (ArrayList<WxNews.NewslistBean>) list;
+        notifyDataSetChanged();
     }
 
 

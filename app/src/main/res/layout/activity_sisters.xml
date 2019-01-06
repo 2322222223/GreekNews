@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_sister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#303F9F"
+        android:minHeight="?attr/actionBarSize">
+
+
+        <ImageView
+            android:id="@+id/sister_like"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="280dp"
+            android:src="@drawable/ic_toolbar_like_n" />
+
+        <ImageView
+            android:id="@+id/sister_share"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_toolbar_share" />
+
+        <ImageView
+            android:id="@+id/sister_save"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_toolbar_save" />
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/big_sister"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
