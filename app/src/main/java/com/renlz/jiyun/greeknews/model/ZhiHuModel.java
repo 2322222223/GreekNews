@@ -2,13 +2,11 @@ package com.renlz.jiyun.greeknews.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.renlz.jiyun.greeknews.activitys.MainActivity;
 import com.renlz.jiyun.greeknews.base.model.InModel;
 import com.renlz.jiyun.greeknews.base.observer.BaseObserver;
-import com.renlz.jiyun.greeknews.beans.BeforeNews;
 import com.renlz.jiyun.greeknews.beans.CountList;
 import com.renlz.jiyun.greeknews.beans.FuliList;
 import com.renlz.jiyun.greeknews.beans.GanHuoList;
@@ -18,23 +16,19 @@ import com.renlz.jiyun.greeknews.beans.NewestNew;
 import com.renlz.jiyun.greeknews.beans.NewsInfo;
 import com.renlz.jiyun.greeknews.beans.SectionList;
 import com.renlz.jiyun.greeknews.beans.ShortCommentes;
-import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiList;
 import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiNewInfo;
 import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiType;
 import com.renlz.jiyun.greeknews.beans.SisterList;
 import com.renlz.jiyun.greeknews.beans.WxNews;
 import com.renlz.jiyun.greeknews.beans.ZhuanLanInfo;
-import com.renlz.jiyun.greeknews.beans.ZhuanLanList;
-import com.renlz.jiyun.greeknews.fragments.setting.SettingFragment;
 import com.renlz.jiyun.greeknews.http.GanHuoNet;
 import com.renlz.jiyun.greeknews.http.MyRetrofit;
 import com.renlz.jiyun.greeknews.http.ShuJuZhiHuiNet;
 import com.renlz.jiyun.greeknews.http.WeiXinNet;
 import com.renlz.jiyun.greeknews.http.ZhiHuNet;
-import com.renlz.jiyun.greeknews.interceptor.MyCache;
 import com.renlz.jiyun.greeknews.myapp.MyApp;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
-import com.umeng.commonsdk.debug.E;
 
 import java.util.Map;
 
@@ -176,7 +170,7 @@ public class ZhiHuModel {
                         .subscribe(new BaseObserver<String>(inModel) {
                             @Override
                             public void onNext(String value) {
-                                inModel.getNewsData(new Gson().fromJson(value, ShuJuZHiHuiList.class), enumApi);
+                                inModel.getNewsData(new Gson().fromJson(value, ShuJuZhiHuiList.class), enumApi);
                                 inModel.setHideProGressBar();
                             }
                         });

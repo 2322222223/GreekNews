@@ -35,6 +35,7 @@ public class V2EXFragment extends BaseFragment<V2EXView, V2EXPresenter<V2EXView>
     private V2EXPresenter<V2EXView> mPresenter;
     private Vp2Adapter mAdapter;
     private ArrayList<String> mList;
+    private ArrayList<String> mTitlelist;
 
     @Override
     public void showProgressBar() {
@@ -96,15 +97,31 @@ public class V2EXFragment extends BaseFragment<V2EXView, V2EXPresenter<V2EXView>
         mList.add("hot");
         mList.add("all");
         mList.add("r2");
+        mTitlelist = new ArrayList<>();
+        mTitlelist.add("技术");
+        mTitlelist.add("创意");
+        mTitlelist.add("好玩");
+        mTitlelist.add("Apple");
+        mTitlelist.add("酷工作");
+        mTitlelist.add("交易");
+        mTitlelist.add("城市");
+        mTitlelist.add("问与答");
+        mTitlelist.add("最热");
+        mTitlelist.add("全部");
+        mTitlelist.add("R2");
+        ArrayList<Fragment>flist=new ArrayList<>();
+        for (int i = 0; i < mTitlelist.size(); i++) {
+            V2EXFragments v2EXFragments = V2EXFragments.newInstance(mList.get(i));
+            flist.add(v2EXFragments);
+        }
 
-            mPresenter.setData("", mList, EnumApi.V2EXTYPE);
-
-
+        Vp2Adapter vp2Adapter = new Vp2Adapter(getChildFragmentManager(), flist, mTitlelist);
+        mVpV2.setAdapter(vp2Adapter);
+        mTabV2.setupWithViewPager(mVpV2);
     }
 
     @Override
     protected void initView(View view) {
-
         mTabV2 = (TabLayout) view.findViewById(R.id.tab_v2);
         mMenuV2 = (ImageView) view.findViewById(R.id.menu_v2);
         mMenuV2.setOnClickListener(this);

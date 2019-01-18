@@ -1,7 +1,6 @@
 package com.renlz.jiyun.greeknews.activitys;
 
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -26,7 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.base.activity.BaseActivity;
 import com.renlz.jiyun.greeknews.beandao.DataBean;
-import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiList;
 import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiNewInfo;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
@@ -71,7 +70,7 @@ public class ShuJuZhiHuiNewsInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPr
     private NestedScrollView mScroll;
     private ImageView mLikeSjzh;
     private boolean isLike;
-    private ShuJuZHiHuiList.RESULTBean.NewsListBean mNews1;
+    private ShuJuZhiHuiList.RESULTBean.NewsListBean mNews1;
     private TextView mInfoTitleSjzh;
     private TextView mTvContentSjzh;
 
@@ -313,7 +312,7 @@ public class ShuJuZhiHuiNewsInfoActivity extends BaseActivity<ZhiHuView, ZhiHuPr
     protected void initData() {
         mPresenter = createPresenter();
         mPresenter.attachView(this);
-        mNews1 = (ShuJuZHiHuiList.RESULTBean.NewsListBean) getIntent().getSerializableExtra("newid");
+        mNews1 = (ShuJuZhiHuiList.RESULTBean.NewsListBean) getIntent().getSerializableExtra("newid");
         mNewid = mNews1.getNewsId();
         Log.d(TAG, "initData: " + mNewid);
         Map<String, Object> map = new HashMap<>();

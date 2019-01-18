@@ -14,11 +14,17 @@ import com.renlz.jiyun.greeknews.utils.EventBusUtil;
 
 public abstract class BaseFragment<V, P extends BasePresenter<V>> extends SimpleFragment {
 
-    private P mPresenter;
+    public P mPresenter;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void initPresenter() {
+        super.initPresenter();
         mPresenter = createPresenter();
         if (mPresenter != null) {
             mPresenter.attachView((V) this);

@@ -2,18 +2,15 @@ package com.renlz.jiyun.greeknews.fragments.xitu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.activitys.MainActivity;
 import com.renlz.jiyun.greeknews.activitys.ShuJuZhiHuiNewsInfoActivity;
 import com.renlz.jiyun.greeknews.adapters.ShuJuZhiHuiApadter;
 import com.renlz.jiyun.greeknews.base.fragment.BaseFragment;
-import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiList;
 import com.renlz.jiyun.greeknews.itemtouchhelper.MyItemTouchHelperAdapter;
 import com.renlz.jiyun.greeknews.myenums.EnumApi;
 import com.renlz.jiyun.greeknews.presenter.ZhiHuPresenter;
@@ -21,7 +18,6 @@ import com.renlz.jiyun.greeknews.utils.Utils;
 import com.renlz.jiyun.greeknews.view.ZhiHuView;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +56,8 @@ public class XiTuFragments extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
         EnumApi enumApi = (EnumApi) o1;
         switch (enumApi) {
             case SJZHNEWS:
-                ShuJuZHiHuiList huiList = (ShuJuZHiHuiList) o;
-                List<ShuJuZHiHuiList.RESULTBean.NewsListBean> newsList = huiList.getRESULT().getNewsList();
+                ShuJuZhiHuiList huiList = (ShuJuZhiHuiList) o;
+                List<ShuJuZhiHuiList.RESULTBean.NewsListBean> newsList = huiList.getRESULT().getNewsList();
                 mHuiApadter.addList(newsList);
                 break;
         }
@@ -108,7 +104,7 @@ public class XiTuFragments extends BaseFragment<ZhiHuView, ZhiHuPresenter<ZhiHuV
 
     @Override
     protected void initAdapter() {
-        mHuiApadter = new ShuJuZhiHuiApadter(mContext, new ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean>());
+        mHuiApadter = new ShuJuZhiHuiApadter(mContext, new ArrayList<ShuJuZhiHuiList.RESULTBean.NewsListBean>());
         mPullrecyclerviewXitu.setAdapter(mHuiApadter);
     }
 

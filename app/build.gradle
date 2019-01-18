@@ -90,4 +90,6 @@ dependencies {
     implementation files('libs/umeng-shareboard-widget-6.9.2.jar')
     implementation files('libs/umeng-sharetool-6.9.2.jar')
     implementation files('libs/wechat-sdk-android-without-mta-5.1.4.jar')
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    implementation files('libs/jsoup-1.7.3.jar')
 }

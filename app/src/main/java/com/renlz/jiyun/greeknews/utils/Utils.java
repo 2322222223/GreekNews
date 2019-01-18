@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.renlz.jiyun.greeknews.R;
 import com.renlz.jiyun.greeknews.myapp.MyApp;
 
@@ -60,9 +61,8 @@ public class Utils {
         } else if (type == 2) {
             Toast toast = new Toast(MyApp.sMyApp);
             View view = LayoutInflater.from(MyApp.sMyApp).inflate(R.layout.item_toast_two, null);
-            TextView tvtitle = view.findViewById(R.id.toast_title);
+            SpinKitView sk = view.findViewById(R.id.spin_kit);
             TextView tvmes = view.findViewById(R.id.toast_mes);
-            tvtitle.setText("提示");
             tvmes.setText(mesT);
             toast.setView(view);
             toast.setGravity(Gravity.CENTER, 0, 0);

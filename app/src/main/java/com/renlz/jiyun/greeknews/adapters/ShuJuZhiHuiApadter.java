@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.renlz.jiyun.greeknews.R;
-import com.renlz.jiyun.greeknews.beans.ShuJuZHiHuiList;
+import com.renlz.jiyun.greeknews.beans.ShuJuZhiHuiList;
 import com.renlz.jiyun.greeknews.itemtouchhelper.ItemTouch;
 
 import java.util.ArrayList;
@@ -24,10 +24,10 @@ import java.util.List;
 
 public class ShuJuZhiHuiApadter extends RecyclerView.Adapter implements ItemTouch {
     private Context mContext;
-    public ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean> mList;
+    public ArrayList<ShuJuZhiHuiList.RESULTBean.NewsListBean> mList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ShuJuZhiHuiApadter(Context context, ArrayList<ShuJuZHiHuiList.RESULTBean.NewsListBean> list) {
+    public ShuJuZhiHuiApadter(Context context, ArrayList<ShuJuZhiHuiList.RESULTBean.NewsListBean> list) {
 
         mContext = context;
         mList = list;
@@ -60,7 +60,7 @@ public class ShuJuZhiHuiApadter extends RecyclerView.Adapter implements ItemTouc
         return mList.size();
     }
 
-    public void addList(List<ShuJuZHiHuiList.RESULTBean.NewsListBean> newsList) {
+    public void addList(List<ShuJuZhiHuiList.RESULTBean.NewsListBean> newsList) {
         mList.addAll(newsList);
         notifyDataSetChanged();
     }

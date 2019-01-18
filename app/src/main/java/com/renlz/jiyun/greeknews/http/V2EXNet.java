@@ -2,6 +2,11 @@ package com.renlz.jiyun.greeknews.http;
 
 import android.widget.Filterable;
 
+import com.renlz.jiyun.greeknews.beans.NodeListBean;
+import com.renlz.jiyun.greeknews.beans.TopicListBean;
+
+import java.util.List;
+
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -25,15 +30,18 @@ public interface V2EXNet {
      * @return
      */
     @GET("/api/nodes/show.json")
-    Flowable<String> getNodeInfo(@Query("name") String name);
+    Observable<TopicListBean> getNodeInfo(@Query("name") String name);
 
+
+    @GET("/api/nodes/show.json")
+    Observable<TopicListBean> getJson();
     /**
      * 获取主题列表
      *
      * @return
      */
     @GET("/api/topics/show.json")
-    Observable<String> getTopicList(@Query("node_name") String name);
+    Flowable<List<NodeListBean>> getTopicList(@Query("node_name") String name);
 
     /**
      * 获取主题信息

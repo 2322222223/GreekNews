@@ -134,12 +134,7 @@ public class InfoActivity extends BaseActivity<ZhiHuView, ZhiHuPresenter<ZhiHuVi
 
     @Override
     protected void initListener() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v->finish());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {

@@ -51,12 +51,16 @@ public abstract class SimpleFragment extends Fragment {
         mBundle = getArguments();
         load = true;
         initView(view);
+        initPresenter();
         initData();
         initAdapter();
         initListener();
         return view;
     }
 
+    public void initPresenter() {
+
+    }
 
     protected abstract void initListener();
 
